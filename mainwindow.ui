@@ -1,0 +1,2998 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>640</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1000</width>
+    <height>640</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1000</width>
+    <height>640</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Shift Measurement Suite v 1.0</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabSMS">
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="supp_setup">
+       <attribute name="title">
+        <string>Supply Setup</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QGroupBox" name="supply1">
+          <property name="title">
+           <string>Supply 1</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="5">
+            <widget class="QLineEdit" name="smu_brand_1">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="frame">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QSpinBox" name="smu_channel_1">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="7">
+            <widget class="QLineEdit" name="smu_model_1">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="frame">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="6">
+            <widget class="QLabel" name="label_smu_current_1">
+             <property name="text">
+              <string>Current</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="6">
+            <widget class="QLabel" name="label_smu_model_1">
+             <property name="text">
+              <string>Model:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QComboBox" name="smu_address_1">
+             <property name="minimumSize">
+              <size>
+               <width>200</width>
+               <height>0</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="5">
+            <widget class="QRadioButton" name="smu_mode_volt_1">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Force Voltage</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QLabel" name="label_smu_voltage_1">
+             <property name="text">
+              <string>Voltage</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="5">
+            <widget class="QDoubleSpinBox" name="smu_voltage_1">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_smu_channel_1">
+             <property name="text">
+              <string>Channel</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="7">
+            <widget class="QDoubleSpinBox" name="smu_current_1">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="8">
+            <widget class="QPushButton" name="smu_button_run_1">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Run</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="8">
+            <widget class="QPushButton" name="smu_button_ping_1">
+             <property name="text">
+              <string>Ping</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="7">
+            <widget class="QRadioButton" name="smu_mode_curr_1">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Force Current</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLabel" name="label_smu_brand_1">
+             <property name="text">
+              <string>Brand:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_smu_address_1">
+             <property name="text">
+              <string>Address:</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="supply2">
+          <property name="title">
+           <string>Supply 2</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="0" column="6">
+            <widget class="QPushButton" name="smu_button_ping_2">
+             <property name="text">
+              <string>Ping</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QComboBox" name="smu_address_2">
+             <property name="minimumSize">
+              <size>
+               <width>200</width>
+               <height>0</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QRadioButton" name="smu_mode_volt_2">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Force Voltage</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
+            <widget class="QLabel" name="label_smu_model_2">
+             <property name="text">
+              <string>Model:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="5">
+            <widget class="QLineEdit" name="smu_model_2">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="frame">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_smu_address_2">
+             <property name="text">
+              <string>Address:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLineEdit" name="smu_brand_2">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="frame">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="5">
+            <widget class="QRadioButton" name="smu_mode_curr_2">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Force Current</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="label_smu_brand_2">
+             <property name="text">
+              <string>Brand:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_smu_channel_2">
+             <property name="text">
+              <string>Channel</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="smu_channel_2">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLabel" name="label_smu_voltage_2">
+             <property name="text">
+              <string>Voltage</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QDoubleSpinBox" name="smu_voltage_2">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="4">
+            <widget class="QLabel" name="label_smu_current_2">
+             <property name="text">
+              <string>Current</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="5">
+            <widget class="QDoubleSpinBox" name="smu_current_2">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="6">
+            <widget class="QPushButton" name="smu_button_run_2">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Run</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="supply3">
+          <property name="title">
+           <string>Supply 3</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="0" column="2">
+            <widget class="QLabel" name="label_smu_brand_3">
+             <property name="text">
+              <string>Brand:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QComboBox" name="smu_address_3">
+             <property name="minimumSize">
+              <size>
+               <width>200</width>
+               <height>0</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
+            <widget class="QLabel" name="label_smu_model_3">
+             <property name="text">
+              <string>Model:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="6">
+            <widget class="QPushButton" name="smu_button_ping_3">
+             <property name="text">
+              <string>Ping</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="5">
+            <widget class="QRadioButton" name="smu_mode_curr_3">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Force Current</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLineEdit" name="smu_brand_3">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="frame">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QRadioButton" name="smu_mode_volt_3">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Force Voltage</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="5">
+            <widget class="QLineEdit" name="smu_model_3">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="frame">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_smu_address_3">
+             <property name="text">
+              <string>Address:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_smu_channel_3">
+             <property name="text">
+              <string>Channel</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="smu_channel_3">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLabel" name="label_smu_voltage_3">
+             <property name="text">
+              <string>Voltage</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QDoubleSpinBox" name="smu_voltage_3">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="4">
+            <widget class="QLabel" name="label_smu_current_3">
+             <property name="text">
+              <string>Current</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="5">
+            <widget class="QDoubleSpinBox" name="smu_current_3">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="6">
+            <widget class="QPushButton" name="smu_button_run_3">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Run</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="supply4">
+          <property name="title">
+           <string>Supply 4</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="1" column="3">
+            <widget class="QRadioButton" name="smu_mode_volt_4">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Force Voltage</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="label_smu_brand_4">
+             <property name="text">
+              <string>Brand:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="5">
+            <widget class="QLineEdit" name="smu_model_4">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="frame">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="5">
+            <widget class="QRadioButton" name="smu_mode_curr_4">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Force Current</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLineEdit" name="smu_brand_4">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="frame">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
+            <widget class="QLabel" name="label_smu_model_4">
+             <property name="text">
+              <string>Model:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="6">
+            <widget class="QPushButton" name="smu_button_ping_4">
+             <property name="text">
+              <string>Ping</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_smu_address_4">
+             <property name="text">
+              <string>Address:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QComboBox" name="smu_address_4">
+             <property name="minimumSize">
+              <size>
+               <width>200</width>
+               <height>0</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_smu_channel_4">
+             <property name="text">
+              <string>Channel</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="smu_channel_4">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLabel" name="label_smu_voltage_4">
+             <property name="text">
+              <string>Voltage</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QDoubleSpinBox" name="smu_voltage_4">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="4">
+            <widget class="QLabel" name="label_smu_current_4">
+             <property name="text">
+              <string>Current</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="5">
+            <widget class="QDoubleSpinBox" name="smu_current_4">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="6">
+            <widget class="QPushButton" name="smu_button_run_4">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Run</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="temp_setup">
+       <attribute name="title">
+        <string>Temperature Setup</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QFrame" name="frameTempMode">
+          <property name="maximumSize">
+           <size>
+            <width>252</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Shadow::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QComboBox" name="comm_mode">
+             <item>
+              <property name="text">
+               <string>GPIB</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>SERIAL</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="layout_oven_info">
+             <item>
+              <widget class="QTabWidget" name="tabComms">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>125</height>
+                </size>
+               </property>
+               <property name="currentIndex">
+                <number>1</number>
+               </property>
+               <widget class="QWidget" name="gpib_comms">
+                <attribute name="title">
+                 <string>GPIB</string>
+                </attribute>
+                <layout class="QGridLayout" name="gridLayout_14">
+                 <item row="0" column="1">
+                  <widget class="QComboBox" name="temp_gpib_address"/>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_oven_address">
+                   <property name="text">
+                    <string>Address:</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="serial_comms">
+                <attribute name="title">
+                 <string>Serial</string>
+                </attribute>
+                <layout class="QGridLayout" name="gridLayout_15">
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_baudrate">
+                   <property name="text">
+                    <string>Baudrate</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="label_seriall_address">
+                   <property name="text">
+                    <string>Address</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_serialport">
+                   <property name="text">
+                    <string>Serial Port</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QComboBox" name="temp_serial_port"/>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QSpinBox" name="temp_serial_address"/>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QSpinBox" name="temp_baudrate"/>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QGridLayout" name="gridLayout_16"/>
+           </item>
+           <item>
+            <widget class="QFrame" name="frame_9">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>120</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::Shape::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Shadow::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_18">
+              <item row="1" column="1">
+               <widget class="QPushButton" name="oven_button_response">
+                <property name="text">
+                 <string>Ping</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_oven_response">
+                <property name="text">
+                 <string>Response:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="oven_response">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QComboBox" name="oven_mode"/>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_oven_mode">
+                <property name="text">
+                 <string>Mode:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_soak_time">
+                <property name="text">
+                 <string>Soak Time</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QSpinBox" name="temp_soak_time"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTabWidget" name="tab_temp_mode">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>100</height>
+              </size>
+             </property>
+             <property name="currentIndex">
+              <number>1</number>
+             </property>
+             <property name="tabBarAutoHide">
+              <bool>false</bool>
+             </property>
+             <widget class="QWidget" name="oven_temp_ramp">
+              <attribute name="title">
+               <string>Ramp</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_10">
+               <item row="1" column="1">
+                <widget class="QDoubleSpinBox" name="temp_ramp_end"/>
+               </item>
+               <item row="2" column="1">
+                <widget class="QDoubleSpinBox" name="temp_ramp_inc"/>
+               </item>
+               <item row="0" column="1">
+                <widget class="QDoubleSpinBox" name="temp_ramp_start"/>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_rampInc">
+                 <property name="text">
+                  <string>Temp. Inc.:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_rampStart">
+                 <property name="text">
+                  <string>Temp. Start:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_rampEnd">
+                 <property name="text">
+                  <string>Temp. End:</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="oven_temp_custom">
+              <attribute name="title">
+               <string>Custom</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <item>
+                <layout class="QGridLayout" name="gridLayout_custom_temp"/>
+               </item>
+               <item>
+                <widget class="QTableView" name="tableTempCustom"/>
+               </item>
+               <item>
+                <layout class="QGridLayout" name="gridLayout_custom_temp_addrem">
+                 <item row="0" column="0">
+                  <widget class="QPushButton" name="add_temp">
+                   <property name="text">
+                    <string>Add</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QPushButton" name="remove_temp">
+                   <property name="text">
+                    <string>Remove</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="frame">
+          <property name="minimumSize">
+           <size>
+            <width>700</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>700</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Shadow::Raised</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="back_plane">
+       <attribute name="title">
+        <string>Backplane</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QFrame" name="frame_pxieSlot">
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Shadow::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_8">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_pxie_slot">
+             <property name="text">
+              <string>PXIE Slot:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="ni_inst_response">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="ni_pxie_slot"/>
+           </item>
+           <item row="0" column="2">
+            <widget class="QPushButton" name="ni_button_ping">
+             <property name="text">
+              <string>Ping</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_inst_response">
+             <property name="text">
+              <string>Instrument Response:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QGroupBox" name="groupBox_nidigitalsetup">
+             <property name="title">
+              <string>NI Digital Setup</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_9">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_nidigital_voltage">
+                <property name="text">
+                 <string>Voltage</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="label_nidigital_current">
+                <property name="text">
+                 <string>Current:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QDoubleSpinBox" name="nidigital_voltage"/>
+              </item>
+              <item row="0" column="3">
+               <widget class="QDoubleSpinBox" name="nidigital_current"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="frame_din">
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Shadow::Raised</enum>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QFrame" name="gridFrame_din">
+             <layout class="QGridLayout" name="din_connector">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item row="1" column="5">
+               <widget class="QCheckBox" name="din_out_37">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="14">
+               <widget class="QCheckBox" name="din_out_110">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="8">
+               <widget class="QCheckBox" name="din_out_40">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QCheckBox" name="din_out_98">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="14">
+               <widget class="QCheckBox" name="din_out_46">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="22">
+               <widget class="QCheckBox" name="din_out_22">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="19">
+               <widget class="QCheckBox" name="din_out_19">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="17">
+               <widget class="QCheckBox" name="din_out_17">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="27">
+               <widget class="QCheckBox" name="din_out_123">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="12">
+               <widget class="QCheckBox" name="din_out_12">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="29">
+               <widget class="QCheckBox" name="din_out_125">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="6">
+               <widget class="QCheckBox" name="din_out_6">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_din_b">
+                <property name="text">
+                 <string>B</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="32">
+               <widget class="QCheckBox" name="din_out_64">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="4">
+               <widget class="QCheckBox" name="din_out_132">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QCheckBox" name="din_out_97">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="9">
+               <widget class="QCheckBox" name="din_out_105">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="20">
+               <widget class="QCheckBox" name="din_out_20">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="28">
+               <widget class="QCheckBox" name="din_out_92">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="12">
+               <widget class="QCheckBox" name="din_out_108">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="13">
+               <widget class="QCheckBox" name="din_out_141">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="17">
+               <widget class="QCheckBox" name="din_out_145">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="16">
+               <widget class="QLabel" name="label_din_16">
+                <property name="text">
+                 <string>16</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="27">
+               <widget class="QCheckBox" name="din_out_155">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="17">
+               <widget class="QLabel" name="label_din_17">
+                <property name="text">
+                 <string>17</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="26">
+               <widget class="QLabel" name="label_din_26">
+                <property name="text">
+                 <string>26</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="11">
+               <widget class="QCheckBox" name="din_out_11">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="9">
+               <widget class="QCheckBox" name="din_out_41">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="30">
+               <widget class="QCheckBox" name="din_out_126">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="30">
+               <widget class="QLabel" name="label_din_30">
+                <property name="text">
+                 <string>30</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="31">
+               <widget class="QCheckBox" name="din_out_31">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="26">
+               <widget class="QCheckBox" name="din_out_58">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="6">
+               <widget class="QCheckBox" name="din_out_70">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="5">
+               <widget class="QCheckBox" name="din_out_5">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="21">
+               <widget class="QCheckBox" name="din_out_53">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="29">
+               <widget class="QCheckBox" name="din_out_157">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="13">
+               <widget class="QCheckBox" name="din_out_13">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="8">
+               <widget class="QLabel" name="label_din_8">
+                <property name="text">
+                 <string>8</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="18">
+               <widget class="QLabel" name="label_din_18">
+                <property name="text">
+                 <string>18</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="29">
+               <widget class="QCheckBox" name="din_out_29">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="30">
+               <widget class="QCheckBox" name="din_out_30">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="24">
+               <widget class="QCheckBox" name="din_out_56">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QCheckBox" name="din_out_129">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="25">
+               <widget class="QCheckBox" name="din_out_57">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="24">
+               <widget class="QCheckBox" name="din_out_120">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="18">
+               <widget class="QCheckBox" name="din_out_146">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="29">
+               <widget class="QLabel" name="label_din_29">
+                <property name="text">
+                 <string>29</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="30">
+               <widget class="QCheckBox" name="din_out_158">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="8">
+               <widget class="QCheckBox" name="din_out_104">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="4">
+               <widget class="QCheckBox" name="din_out_4">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="2">
+               <widget class="QCheckBox" name="din_out_130">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="4">
+               <widget class="QLabel" name="label_din_4">
+                <property name="text">
+                 <string>4</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="16">
+               <widget class="QCheckBox" name="din_out_144">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="11">
+               <widget class="QCheckBox" name="din_out_75">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="22">
+               <widget class="QCheckBox" name="din_out_86">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_din_d">
+                <property name="text">
+                 <string>D</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="7">
+               <widget class="QCheckBox" name="din_out_103">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="26">
+               <widget class="QCheckBox" name="din_out_154">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="30">
+               <widget class="QCheckBox" name="din_out_94">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="6">
+               <widget class="QCheckBox" name="din_out_38">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="14">
+               <widget class="QCheckBox" name="din_out_14">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="6">
+               <widget class="QLabel" name="label_din_6">
+                <property name="text">
+                 <string>6</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="18">
+               <widget class="QCheckBox" name="din_out_50">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="6">
+               <widget class="QCheckBox" name="din_out_134">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="25">
+               <widget class="QLabel" name="label_din_25">
+                <property name="text">
+                 <string>25</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="26">
+               <widget class="QCheckBox" name="din_out_122">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="23">
+               <widget class="QLabel" name="label_din_23">
+                <property name="text">
+                 <string>23</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="10">
+               <widget class="QLabel" name="label_din_10">
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="16">
+               <widget class="QCheckBox" name="din_out_80">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="20">
+               <widget class="QCheckBox" name="din_out_52">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="28">
+               <widget class="QCheckBox" name="din_out_28">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="5">
+               <widget class="QCheckBox" name="din_out_69">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="9">
+               <widget class="QCheckBox" name="din_out_137">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="25">
+               <widget class="QCheckBox" name="din_out_153">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="27">
+               <widget class="QCheckBox" name="din_out_27">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="10">
+               <widget class="QCheckBox" name="din_out_138">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="27">
+               <widget class="QLabel" name="label_din_27">
+                <property name="text">
+                 <string>27</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="5">
+               <widget class="QLabel" name="label_din_5">
+                <property name="text">
+                 <string>5</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="32">
+               <widget class="QCheckBox" name="din_out_160">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="24">
+               <widget class="QCheckBox" name="din_out_24">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="4">
+               <widget class="QCheckBox" name="din_out_36">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="14">
+               <widget class="QCheckBox" name="din_out_142">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="12">
+               <widget class="QCheckBox" name="din_out_76">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="32">
+               <widget class="QLabel" name="label_din_32">
+                <property name="text">
+                 <string>32</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="23">
+               <widget class="QCheckBox" name="din_out_151">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="16">
+               <widget class="QCheckBox" name="din_out_48">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="25">
+               <widget class="QCheckBox" name="din_out_25">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="13">
+               <widget class="QLabel" name="label_din_13">
+                <property name="text">
+                 <string>13</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="19">
+               <widget class="QCheckBox" name="din_out_147">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="13">
+               <widget class="QCheckBox" name="din_out_109">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="22">
+               <widget class="QCheckBox" name="din_out_150">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="22">
+               <widget class="QCheckBox" name="din_out_118">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="4">
+               <widget class="QCheckBox" name="din_out_68">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="18">
+               <widget class="QCheckBox" name="din_out_18">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="31">
+               <widget class="QCheckBox" name="din_out_159">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="7">
+               <widget class="QCheckBox" name="din_out_39">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="24">
+               <widget class="QLabel" name="label_din_24">
+                <property name="text">
+                 <string>24</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="5">
+               <widget class="QCheckBox" name="din_out_133">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="11">
+               <widget class="QCheckBox" name="din_out_139">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="15">
+               <widget class="QCheckBox" name="din_out_47">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="19">
+               <widget class="QCheckBox" name="din_out_83">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="12">
+               <widget class="QCheckBox" name="din_out_140">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="7">
+               <widget class="QLabel" name="label_din_7">
+                <property name="text">
+                 <string>7</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="18">
+               <widget class="QCheckBox" name="din_out_82">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="15">
+               <widget class="QCheckBox" name="din_out_143">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="19">
+               <widget class="QLabel" name="label_din_19">
+                <property name="text">
+                 <string>19</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_din_c">
+                <property name="text">
+                 <string>C</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="3">
+               <widget class="QLabel" name="label_din_3">
+                <property name="text">
+                 <string>3</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="28">
+               <widget class="QCheckBox" name="din_out_124">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="12">
+               <widget class="QCheckBox" name="din_out_44">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QCheckBox" name="din_out_3">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="30">
+               <widget class="QCheckBox" name="din_out_62">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="17">
+               <widget class="QCheckBox" name="din_out_113">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="23">
+               <widget class="QCheckBox" name="din_out_55">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="28">
+               <widget class="QCheckBox" name="din_out_60">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="31">
+               <widget class="QCheckBox" name="din_out_95">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="12">
+               <widget class="QLabel" name="label_din_12">
+                <property name="text">
+                 <string>12</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="23">
+               <widget class="QCheckBox" name="din_out_119">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="18">
+               <widget class="QCheckBox" name="din_out_114">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="27">
+               <widget class="QCheckBox" name="din_out_59">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="29">
+               <widget class="QCheckBox" name="din_out_93">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="15">
+               <widget class="QCheckBox" name="din_out_79">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="32">
+               <widget class="QCheckBox" name="din_out_128">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QCheckBox" name="din_out_1">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="5">
+               <widget class="QCheckBox" name="din_out_101">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="8">
+               <widget class="QCheckBox" name="din_out_72">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="8">
+               <widget class="QCheckBox" name="din_out_136">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="25">
+               <widget class="QCheckBox" name="din_out_89">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="10">
+               <widget class="QCheckBox" name="din_out_106">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="7">
+               <widget class="QCheckBox" name="din_out_71">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="24">
+               <widget class="QCheckBox" name="din_out_88">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="11">
+               <widget class="QCheckBox" name="din_out_107">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="15">
+               <widget class="QCheckBox" name="din_out_15">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="11">
+               <widget class="QCheckBox" name="din_out_43">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="22">
+               <widget class="QCheckBox" name="din_out_54">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="4">
+               <widget class="QCheckBox" name="din_out_100">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QCheckBox" name="din_out_65">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="25">
+               <widget class="QCheckBox" name="din_out_121">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="20">
+               <widget class="QCheckBox" name="din_out_116">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="10">
+               <widget class="QCheckBox" name="din_out_74">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="20">
+               <widget class="QCheckBox" name="din_out_148">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_din_a">
+                <property name="text">
+                 <string>A</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="14">
+               <widget class="QLabel" name="label_din_14">
+                <property name="text">
+                 <string>14</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="21">
+               <widget class="QLabel" name="label_din_21">
+                <property name="text">
+                 <string>21</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="9">
+               <widget class="QLabel" name="label_din_9">
+                <property name="text">
+                 <string>9</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="31">
+               <widget class="QCheckBox" name="din_out_127">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="27">
+               <widget class="QCheckBox" name="din_out_91">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="20">
+               <widget class="QLabel" name="label_din_20">
+                <property name="text">
+                 <string>20</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QCheckBox" name="din_out_66">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="21">
+               <widget class="QCheckBox" name="din_out_85">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="17">
+               <widget class="QCheckBox" name="din_out_49">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="3">
+               <widget class="QCheckBox" name="din_out_99">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="19">
+               <widget class="QCheckBox" name="din_out_115">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="28">
+               <widget class="QLabel" name="label_din_28">
+                <property name="text">
+                 <string>28</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="6">
+               <widget class="QCheckBox" name="din_out_102">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="21">
+               <widget class="QCheckBox" name="din_out_117">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QCheckBox" name="din_out_33">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="13">
+               <widget class="QCheckBox" name="din_out_45">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="23">
+               <widget class="QCheckBox" name="din_out_87">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="24">
+               <widget class="QCheckBox" name="din_out_152">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="2">
+               <widget class="QLabel" name="label_din_2">
+                <property name="text">
+                 <string>2</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="9">
+               <widget class="QCheckBox" name="din_out_9">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="10">
+               <widget class="QCheckBox" name="din_out_10">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="23">
+               <widget class="QCheckBox" name="din_out_23">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="32">
+               <widget class="QCheckBox" name="din_out_32">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="15">
+               <widget class="QCheckBox" name="din_out_111">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="20">
+               <widget class="QCheckBox" name="din_out_84">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="8">
+               <widget class="QCheckBox" name="din_out_8">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="19">
+               <widget class="QCheckBox" name="din_out_51">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="15">
+               <widget class="QLabel" name="label_din_15">
+                <property name="text">
+                 <string>15</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="21">
+               <widget class="QCheckBox" name="din_out_149">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="31">
+               <widget class="QLabel" name="label_din_31">
+                <property name="text">
+                 <string>31</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="26">
+               <widget class="QCheckBox" name="din_out_26">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QCheckBox" name="din_out_2">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="16">
+               <widget class="QCheckBox" name="din_out_16">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="28">
+               <widget class="QCheckBox" name="din_out_156">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QCheckBox" name="din_out_35">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="3">
+               <widget class="QCheckBox" name="din_out_131">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="21">
+               <widget class="QCheckBox" name="din_out_21">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="17">
+               <widget class="QCheckBox" name="din_out_81">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="14">
+               <widget class="QCheckBox" name="din_out_78">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="7">
+               <widget class="QCheckBox" name="din_out_135">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="32">
+               <widget class="QCheckBox" name="din_out_96">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="29">
+               <widget class="QCheckBox" name="din_out_61">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QCheckBox" name="din_out_34">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="10">
+               <widget class="QCheckBox" name="din_out_42">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="13">
+               <widget class="QCheckBox" name="din_out_77">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="3">
+               <widget class="QCheckBox" name="din_out_67">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="7">
+               <widget class="QCheckBox" name="din_out_7">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="31">
+               <widget class="QCheckBox" name="din_out_63">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="22">
+               <widget class="QLabel" name="label_din_22">
+                <property name="text">
+                 <string>22</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="11">
+               <widget class="QLabel" name="label_din_11">
+                <property name="text">
+                 <string>11</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="26">
+               <widget class="QCheckBox" name="din_out_90">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_din_z">
+                <property name="text">
+                 <string>Z</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="9">
+               <widget class="QCheckBox" name="din_out_73">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="16">
+               <widget class="QCheckBox" name="din_out_112">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLabel" name="label_din">
+                <property name="text">
+                 <string>1</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="measurement">
+       <attribute name="title">
+        <string>Measurement</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QFrame" name="frame_3">
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Shadow::Raised</enum>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <widget class="QWidget" name="gridLayout_measInfo" native="true">
+             <property name="maximumSize">
+              <size>
+               <width>465</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_11">
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_measMode">
+                <property name="text">
+                 <string>Function</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_measRange">
+                <property name="text">
+                 <string>Range</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_measAddress">
+                <property name="text">
+                 <string>Address</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_measInst">
+                <property name="text">
+                 <string>Instrument:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QComboBox" name="meas_mode"/>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="label_measSample">
+                <property name="text">
+                 <string>Sample Count</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QComboBox" name="meas_address"/>
+              </item>
+              <item row="5" column="1">
+               <widget class="QSpinBox" name="meas_sample"/>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLineEdit" name="meas_response">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QPushButton" name="meas_ping_button">
+                <property name="text">
+                 <string>Ping</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QComboBox" name="meas_range"/>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_measCount">
+                <property name="text">
+                 <string>Measure Count</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QSpinBox" name="meas_count"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="widget_2" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <item>
+               <widget class="QFrame" name="frame_7">
+                <property name="frameShape">
+                 <enum>QFrame::Shape::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Shadow::Raised</enum>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_5">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_file_output">
+                   <property name="text">
+                    <string>File Output:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLineEdit" name="file_name"/>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QPushButton" name="save_file_button">
+                   <property name="text">
+                    <string>Save File</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="frame_8">
+                <property name="frameShape">
+                 <enum>QFrame::Shape::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Shadow::Raised</enum>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_13">
+                 <item row="2" column="1">
+                  <widget class="QPushButton" name="test_abort_button">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="palette">
+                    <palette>
+                     <active>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="179">
+                         <red>255</red>
+                         <green>0</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </active>
+                     <inactive>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="179">
+                         <red>255</red>
+                         <green>0</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </inactive>
+                     <disabled>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="179">
+                         <red>255</red>
+                         <green>0</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </disabled>
+                    </palette>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Roboto</family>
+                     <pointsize>16</pointsize>
+                     <bold>false</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Abort</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QPushButton" name="test_run_button">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="palette">
+                    <palette>
+                     <active>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="179">
+                         <red>0</red>
+                         <green>255</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </active>
+                     <inactive>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="179">
+                         <red>0</red>
+                         <green>255</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </inactive>
+                     <disabled>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="179">
+                         <red>0</red>
+                         <green>255</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </disabled>
+                    </palette>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Roboto</family>
+                     <pointsize>16</pointsize>
+                     <bold>false</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Run</string>
+                   </property>
+                   <property name="checkable">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_test_mode">
+                   <property name="text">
+                    <string>Test Mode</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QComboBox" name="temp_test_mode">
+                   <item>
+                    <property name="text">
+                     <string>Ambient ( No Oven)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>With Oven</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_temp_set">
+                   <property name="text">
+                    <string>Temperature Set:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QComboBox" name="temp_set">
+                   <item>
+                    <property name="text">
+                     <string>Ramp</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Custom</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="frame_4">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>252</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>252</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Shadow::Raised</enum>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <widget class="QTableView" name="measure_output_table"/>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="run_test">
+       <attribute name="title">
+        <string>Run Test</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QFrame" name="frame_5">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Shadow::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_6"/>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frame_6">
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Shadow::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_8">
+             <item>
+              <layout class="QGridLayout" name="gridLayout_7"/>
+             </item>
+             <item>
+              <layout class="QGridLayout" name="gridLayout_12"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QFrame" name="frame_2">
+          <property name="minimumSize">
+           <size>
+            <width>600</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Shadow::Raised</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1000</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="actionVersion"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout_2"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuAbout"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionVersion">
+   <property name="text">
+    <string>Version</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionAbout_2">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

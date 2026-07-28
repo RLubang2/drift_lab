@@ -1,0 +1,384 @@
+from __future__ import annotations
+
+import time
+from typing import TYPE_CHECKING, Optional
+
+from PyQt6.QtCore import QThread, pyqtSignal, QObject
+from PyQt6.QtWidgets import QMessageBox, QApplication
+
+if TYPE_CHECKING:
+    from ui_manager.user_interface_config import UserInterfaceConfig
+    from cons_window.console import ConsoleWindow
+
+from measurement_manager.run_dmm import RunDMM
+from measurement_manager.tableview import TableViewV2
+from ni_pxie_6570.ni_digital import PXIE6570
+from backplane.check_enabled_output import CheckEnableOutput
+from backplane.mux_control import SwitchBackplaneToDmm, SwitchBoardToBackplane, EnableDmmMux
+from file_manager.file_path import FilePath
+from file_manager.save import SaveManager
+from temperature_manager.temp_run import RunTemp
+from ui_manager.user_interface_variable import (
+    DIN_OUT1, DIN_OUT2, DIN_OUT3, DIN_OUT4, DIN_OUT5, DIN_OUT6,
+)
+
+
+
+
+class TestWorker(QObject):
+    finished = pyqtSignal()
+    error = pyqtSignal(str)
+    result_ready = pyqtSignal(dict)
+    log_message = pyqtSignal(str)
+
+    def __init__(self, run_test: RunTest, test_mode: int, temp_set_mode: int) -> None:
+        super().__init__()
+        self._run_test = run_test
+        self._test_mode = test_mode
+        self._temp_set_mode = temp_set_mode
+        self._abort_requested = False
+
+    def request_abort(self) -> None:
+        self._abort_requested = True
+
+    @property
+    def is_aborted(self) -> bool:
+        return self._abort_requested
+
+    def run(self) -> None:
+        try:
+            if self._test_mode == 0:
+                self._run_ambient()
+            elif self._test_mode == 1:
+                if self._temp_set_mode == 0:
+                    self._run_sweep()
+                else:
+                    self._run_custom()
+            else:
+                self._run_ambient()
+        except Exception as e:
+            self.error.emit(str(e))
+        finally:
+            self.finished.emit()
+
+    def _validate_instrument_resources(self) -> bool:
+        rt = self._run_test
+
+        if rt.ui_config.meas_address.currentIndex() < 1:
+            self.error.emit("No DMM resource connected. Please configure DMM address.")
+            return False
+
+        if not rt.ui_config.ni_slot_address.text().strip():
+            self.error.emit("No NI PXIe-6570 resource connected. Please configure NI Digital slot address.")
+            return False
+
+        return True
+
+    def _validate_temp_chamber(self) -> bool:
+        rt = self._run_test
+        if rt.ui_config.temp_tab_comm.currentIndex() == 0:
+            if rt.ui_config.temp_address.currentIndex() < 1:
+                self.error.emit("No temperature chamber connected. Please configure oven GPIB address.")
+                return False
+        else:
+            if rt.ui_config.serial_port.currentIndex() < 1:
+                self.error.emit("No temperature chamber connected. Please configure serial port.")
+                return False
+        return True
+
+    def _run_ambient(self) -> None:
+        if not self._validate_instrument_resources():
+            return
+
+        self.log_message.emit("Starting ambient test...")
+        rt = self._run_test
+
+        filepath = rt.ui_config.file_name.text().strip()
+        actual_path = rt.save_manager.open_file(filepath)
+        rt.ui_config.file_name.setText(actual_path)
+
+        dut_output = self._read_output()
+        if self._abort_requested:
+            return
+
+        row_data = {"AMB": dut_output}
+        self.result_ready.emit(row_data)
+        rt.save_manager.save_result("AMB", dut_output)
+        rt.save_manager.close_file()
+
+    def _run_sweep(self) -> None:
+        if not self._validate_instrument_resources():
+            return
+        if not self._validate_temp_chamber():
+            return
+
+        rt = self._run_test
+        temp_start = int(rt.ui_config.temp_start_ramp.value() * 10)
+        temp_end = int(rt.ui_config.temp_end_ramp.value() * 10)
+        temp_inc = int(rt.ui_config.temp_inc_ramp.value() * 10)
+
+        try:
+            rt.temp_chamber.connect_dev()
+        except Exception as e:
+            self.error.emit(f"Failed to connect to temperature chamber: {e}")
+            return
+
+        row_data: dict = {}
+
+        for temp in range(temp_start, temp_end, temp_inc):
+            if self._abort_requested:
+                return
+            temp_val = temp / 10
+            self.log_message.emit(f"Testing in temperature: {temp_val}")
+            rt.temp_chamber.temp_write(temp_val)
+            rt.temp_chamber.temp_soak(temp_val)
+
+            dut_output = self._read_output()
+            if self._abort_requested:
+                return
+            row_data[temp_val] = dut_output
+
+        if row_data:
+            self.result_ready.emit(row_data)
+
+    def _run_custom(self) -> None:
+        if not self._validate_instrument_resources():
+            return
+        if not self._validate_temp_chamber():
+            return
+
+        rt = self._run_test
+        row_count = rt.ui_config.temp_model.rowCount()
+
+        if row_count < 1:
+            self.error.emit("Please set temperature point")
+            return
+
+        try:
+            rt.temp_chamber.connect_dev()
+        except Exception as e:
+            self.error.emit(f"Failed to connect to temperature chamber: {e}")
+            return
+
+        row_data: dict = {}
+
+        for row in range(row_count):
+            if self._abort_requested:
+                return
+            temp_value = float(rt.ui_config.temp_model.index(row, 0).data())
+            self.log_message.emit(f"Testing in temperature: {temp_value}")
+            rt.temp_chamber.temp_write(temp_value)
+            rt.temp_chamber.temp_soak(temp_value)
+
+            dut_output = self._read_output()
+            if self._abort_requested:
+                return
+            row_data[temp_value] = dut_output
+
+        if row_data:
+            self.result_ready.emit(row_data)
+
+    def _read_output(self) -> dict:
+        rt = self._run_test
+        ni_voltage_level = rt.ui_config.ni_voltage_lvl.value()
+        ni_current_level = rt.ui_config.ni_current_lvl.value()
+        ni_resource = rt.ui_config.ni_slot_address.text()
+        meas_count = rt.ui_config.meas_count.value()
+
+        self.log_message.emit(
+            f"NI Resource: {ni_resource}, V: {ni_voltage_level}, I: {ni_current_level}"
+        )
+
+        result: dict = {}
+        output_num = 1
+
+        rt.dmm.init_device()
+        self.log_message.emit("DMM initialized successfully.")
+        time.sleep(1)
+
+        if not rt.backplane_config.check_enabled_checkbox():
+            return result
+
+        self.log_message.emit("Enabling MUX1")
+        rt.ni.force_voltage(
+            ni_resource,
+            rt.enable_mux_dmm.enable_mux_u1(),
+            ni_voltage_level,
+            ni_current_level,
+        )
+        time.sleep(1)
+
+        output_groups = [
+            (rt.backplane_config.check_out_1_16, rt.switch_backplane_to_dmm.case_1, DIN_OUT1, 0.0),
+            (rt.backplane_config.check_out_17_32, rt.switch_backplane_to_dmm.case_2, DIN_OUT2, ni_voltage_level),
+            (rt.backplane_config.check_out_33_48, rt.switch_backplane_to_dmm.case_3, DIN_OUT3, ni_voltage_level),
+            (rt.backplane_config.check_out_49_64, rt.switch_backplane_to_dmm.case_4, DIN_OUT4, ni_voltage_level),
+            (rt.backplane_config.check_out_65_80, rt.switch_backplane_to_dmm.case_5, DIN_OUT5, ni_voltage_level),
+            (rt.backplane_config.check_out_81_96, rt.switch_backplane_to_dmm.case_6, DIN_OUT6, ni_voltage_level),
+        ]
+
+        for check_fn, get_channel_fn, din_outputs, ni_voltage in output_groups:
+            if self._abort_requested:
+                break
+            if not check_fn():
+                continue
+
+            backplane_channel = get_channel_fn()
+            self.log_message.emit(f"Backplane Channel: {backplane_channel}")
+
+            rt.ni.force_voltage(
+                ni_resource, backplane_channel, ni_voltage, ni_current_level
+            )
+            time.sleep(1)
+
+            try:
+                for x in din_outputs:
+                    if self._abort_requested:
+                        break
+                    if not rt.ui_config.din_output[x]["outx"].isChecked():
+                        continue
+
+                    self.log_message.emit(f"Measuring output at DIN no.: {x}")
+
+                    dut_to_din = x % 16
+                    channel = rt.switch_board_to_backplane.switch(dut_to_din)
+                    for_voltage = 0.0 if dut_to_din == 1 else ni_voltage_level
+
+                    self.log_message.emit(f"Measuring DIN_OUT{x}")
+
+                    rt.ni.force_voltage(
+                        ni_resource, channel, for_voltage, ni_current_level
+                    )
+                    time.sleep(1)
+
+                    try:
+                        output_data = []
+                        for _ in range(meas_count):
+                            if self._abort_requested:
+                                break
+                            time.sleep(0.5)
+                            reading = rt.dmm.read_output()
+                            value = float(reading) if reading else None
+                            output_data.append(value)
+                    finally:
+                        rt.ni.disconnect_channel(ni_resource, channel)
+
+                    result[output_num] = output_data
+                    output_num += 1
+            finally:
+                rt.ni.disconnect_channel(ni_resource, backplane_channel)
+
+        return result
+
+
+class RunTest:
+    def __init__(self, ui_config: UserInterfaceConfig, console: ConsoleWindow) -> None:
+        self.ui_config = ui_config
+        self.console_window = console
+        self.ni_resource: Optional[str] = None
+
+        self.file_path = FilePath(self.ui_config)
+        self.save_manager = SaveManager()
+
+        self.switch_backplane_to_dmm = SwitchBackplaneToDmm()
+        self.switch_board_to_backplane = SwitchBoardToBackplane()
+        self.enable_mux_dmm = EnableDmmMux()
+        self.ni = PXIE6570()
+
+        self.dmm = RunDMM(self.ui_config)
+        self.table_v2 = TableViewV2(self.ui_config)
+        self.backplane_config = CheckEnableOutput(self.ui_config)
+        self.temp_chamber = RunTemp(self.ui_config)
+
+        self._worker: Optional[TestWorker] = None
+        self._thread: Optional[QThread] = None
+
+        self._connect_buttons()
+
+    def _connect_buttons(self) -> None:
+        self.ui_config.test_run_button.pressed.connect(self._start_test)
+        self.ui_config.test_abort_button.pressed.connect(self._abort_test)
+
+    def _start_test(self) -> None:
+        if self._thread is not None and self._thread.isRunning():
+            QMessageBox.warning(None, "Test Running", "A test is already in progress.")
+            return
+
+        test_mode = self.ui_config.temp_test_mode.currentIndex()
+        temp_set_mode = self.ui_config.temp_set.currentIndex()
+
+        self.console_window.log("Run Test initialized")
+        self.console_window.log(f"Test Mode: {test_mode}, Set Mode: {temp_set_mode}")
+
+        self._thread = QThread()
+        self._worker = TestWorker(self, test_mode, temp_set_mode)
+        self._worker.moveToThread(self._thread)
+
+        self._thread.started.connect(self._worker.run)
+        self._worker.finished.connect(self._on_test_finished)
+        self._worker.error.connect(self._on_test_error)
+        self._worker.result_ready.connect(self._on_result_ready)
+        self._worker.log_message.connect(self.console_window.log)
+
+        self.ui_config.test_run_button.setEnabled(False)
+        self._thread.start()
+
+    def _abort_test(self) -> None:
+        self.console_window.log("Abort requested - resetting all equipment...")
+        if self._worker is not None:
+            self._worker.request_abort()
+        self.reset_all_equipment()
+
+    def _on_test_finished(self) -> None:
+        self.ui_config.test_run_button.setEnabled(True)
+        if self._thread is not None:
+            self._thread.quit()
+            self._thread.wait()
+        self._thread = None
+        self._worker = None
+        self.console_window.log("Test finished.")
+
+    def _on_test_error(self, message: str) -> None:
+        self.console_window.log(f"ERROR: {message}")
+        QMessageBox.critical(None, "Test Error", message)
+
+    def _on_result_ready(self, results: dict) -> None:
+        self.table_v2.update_results(results)
+        if self.ui_config.temp_test_mode.currentIndex() == 0:
+            QMessageBox.information(
+                None, "Ambient Test", "Ambient test completed successfully."
+            )
+
+    def reset_all_equipment(self) -> None:
+        ni_resource = self.ui_config.ni_slot_address.text().strip()
+        if ni_resource:
+            try:
+                self.ni.reset_nidigital(ni_resource)
+                self.console_window.log("NI Digital reset.")
+            except Exception as e:
+                self.console_window.log(f"Failed to reset NI Digital: {e}")
+
+        if self.ui_config.meas_address.currentIndex() > 0:
+            try:
+                self.dmm.dev_reset()
+                self.dmm.dev_close()
+                self.console_window.log("DMM reset and closed.")
+            except Exception as e:
+                self.console_window.log(f"Failed to reset DMM: {e}")
+
+        has_temp = False
+        if self.ui_config.temp_tab_comm.currentIndex() == 0:
+            has_temp = self.ui_config.temp_address.currentIndex() > 0
+        else:
+            has_temp = self.ui_config.serial_port.currentIndex() > 0
+
+        if has_temp:
+            try:
+                self.temp_chamber.temp_write(25.0)
+                time.sleep(1)
+                self.temp_chamber.temp_close()
+                self.console_window.log("Temperature chamber set to 25°C.")
+            except Exception as e:
+                self.console_window.log(f"Failed to reset temperature chamber: {e}")
+
+        self.console_window.log("All equipment reset.")
