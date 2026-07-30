@@ -254,7 +254,7 @@ class TestWorker(QObject):
             rt.ni.force_voltage(
                 ni_resource, backplane_channel, ni_voltage, ni_current_level
             )
-            time.sleep(2)
+            time.sleep(5)
 
             try:
                 for x in din_outputs:
@@ -271,24 +271,26 @@ class TestWorker(QObject):
 
                     self.log_message.emit(f"Measuring DIN_OUT{x}")
 
-                    if x == 5:
+                    # if x == 5:
+                    #     rt.ni.force_voltage(
+                    #         ni_resource,
+                    #         rt.switch_board_to_backplane.switch(1),
+                    #         0.0,
+                    #         ni_current_level
+                    #         )
+
+                    #     time.sleep(2)
+                    for _ in range(2):
                         rt.ni.force_voltage(
-                            ni_resource,
-                            rt.switch_board_to_backplane.switch(1),
-                            0.0,
-                            ni_current_level
-                            )
+                            ni_resource, channel, for_voltage, ni_current_level
+                        )
+                    # if x == 5:
+                    #     # self.log_message.emit("Measuring DIN5, Add delay 10 s")
+                    #     time.sleep(2)
+                    # else:
+                    #     time.sleep(2)
 
-                        time.sleep(2)
-
-                    rt.ni.force_voltage(
-                        ni_resource, channel, for_voltage, ni_current_level
-                    )
-                    if x == 5:
-                        # self.log_message.emit("Measuring DIN5, Add delay 10 s")
-                        time.sleep(2)
-                    else:
-                        time.sleep(2)
+                    time.sleep(2)
 
                     try:
                         output_data = []
@@ -302,18 +304,29 @@ class TestWorker(QObject):
                             output_data.append(value)
                     finally:
                         # rt.ni.disconnect_channel(ni_resource, channel)
+                        rst_channel = rt.switch_board_to_backplane.switch(0)
                         rt.ni.force_voltage(
                             ni_resource,
-                            channel,
+                            rst_channel,
                             0.0,
                             ni_current_level
                         )
-
+                        
+                        time.sleep(1)
                     result[output_num] = output_data
                     output_num += 1
             finally:
                 # rt.ni.disconnect_channel(ni_resource, backplane_channel)
-                rt.ni.reset_nidigital(ni_resource)
+                # rt.ni.reset_nidigital(ni_resource)
+                # rt.dmm.dev_clear()
+                rst_mux_dmm_channel = rt.switch_backplane_to_dmm.switch(0)
+                rt.ni.force_voltage(
+                    ni_resource,
+                    rst_mux_dmm_channel,
+                    0.0,
+                    ni_current_level
+                )
+                time.sleep(1)
 
         return result
 

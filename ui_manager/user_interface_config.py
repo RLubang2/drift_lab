@@ -326,7 +326,7 @@ class UserInterfaceConfig:
 
         self.ni_voltage_lvl = self.window.findChild(QtWidgets.QDoubleSpinBox, 'nidigital_voltage')
         self.ni_current_lvl = self.window.findChild(QtWidgets.QDoubleSpinBox, 'nidigital_current')
-
+        self.ni_current_lvl.setDecimals(4)
         self.din_output = {}
         for output_number in DIN_OUT_NUMBER:
             self.din_output[output_number] = {
