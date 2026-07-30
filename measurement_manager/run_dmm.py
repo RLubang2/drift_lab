@@ -42,11 +42,13 @@ class RunDMM:
 
     def read_output(self) -> Optional[str]:
         self.keysight_3458.dmm_write("TARM HOLD")
-        time.sleep(0.1)
+        time.sleep(0.2)
         self.keysight_3458.dmm_write("TARM SGL, 1")
-        time.sleep(0.1)
+        time.sleep(0.2)
         result = self.keysight_3458.dmm_read()
+        time.sleep(0.2)
         self.keysight_3458.dmm_clear()
+        time.sleep(0.2)
         return result
 
     def dev_clear(self) -> None:

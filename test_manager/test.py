@@ -111,8 +111,13 @@ class TestWorker(QObject):
             return
         if not self._validate_temp_chamber():
             return
-
+        self.log_message.emit("Starting Sweep Temperature Test...")
         rt = self._run_test
+
+        filepath = rt.ui_config.file_name.text().strip()
+        actual_path = rt.save_manager.open_file(filepath)
+        rt.ui_config.file_name.setText(actual_path)
+
         temp_start = int(rt.ui_config.temp_start_ramp.value() * 10)
         temp_end = int(rt.ui_config.temp_end_ramp.value() * 10)
         temp_inc = int(rt.ui_config.temp_inc_ramp.value() * 10)
@@ -121,25 +126,32 @@ class TestWorker(QObject):
             rt.temp_chamber.connect_dev()
         except Exception as e:
             self.error.emit(f"Failed to connect to temperature chamber: {e}")
+            rt.save_manager.close_file()
             return
 
         row_data: dict = {}
 
-        for temp in range(temp_start, temp_end, temp_inc):
-            if self._abort_requested:
-                return
-            temp_val = temp / 10
-            self.log_message.emit(f"Testing in temperature: {temp_val}")
-            rt.temp_chamber.temp_write(temp_val)
-            rt.temp_chamber.temp_soak(temp_val)
+        try:
+            for temp in range(temp_start, temp_end, temp_inc):
+                if self._abort_requested:
+                    return
+                temp_val = temp / 10
+                self.log_message.emit(f"Testing in temperature: {temp_val}")
+                rt.temp_chamber.temp_write(temp_val)
+                rt.temp_chamber.temp_soak(temp_val)
 
-            dut_output = self._read_output()
-            if self._abort_requested:
-                return
-            row_data[temp_val] = dut_output
+                dut_output = self._read_output()
+                if self._abort_requested:
+                    return
 
-        if row_data:
-            self.result_ready.emit(row_data)
+                if dut_output:
+                    rt.save_manager.save_result(temp_val, dut_output)
+                row_data[temp_val] = dut_output
+
+            if row_data:
+                self.result_ready.emit(row_data)
+        finally:
+            rt.save_manager.close_file()
 
     def _run_custom(self) -> None:
         if not self._validate_instrument_resources():
@@ -154,29 +166,40 @@ class TestWorker(QObject):
             self.error.emit("Please set temperature point")
             return
 
+        filepath = rt.ui_config.file_name.text().strip()
+        actual_path = rt.save_manager.open_file(filepath)
+        rt.ui_config.file_name.setText(actual_path)
+
         try:
             rt.temp_chamber.connect_dev()
         except Exception as e:
             self.error.emit(f"Failed to connect to temperature chamber: {e}")
+            rt.save_manager.close_file()
             return
 
         row_data: dict = {}
 
-        for row in range(row_count):
-            if self._abort_requested:
-                return
-            temp_value = float(rt.ui_config.temp_model.index(row, 0).data())
-            self.log_message.emit(f"Testing in temperature: {temp_value}")
-            rt.temp_chamber.temp_write(temp_value)
-            rt.temp_chamber.temp_soak(temp_value)
+        try:
+            for row in range(row_count):
+                if self._abort_requested:
+                    return
+                temp_value = float(rt.ui_config.temp_model.index(row, 0).data())
+                self.log_message.emit(f"Testing in temperature: {temp_value}")
+                rt.temp_chamber.temp_write(temp_value)
+                rt.temp_chamber.temp_soak(temp_value)
 
-            dut_output = self._read_output()
-            if self._abort_requested:
-                return
-            row_data[temp_value] = dut_output
+                dut_output = self._read_output()
+                if self._abort_requested:
+                    return
 
-        if row_data:
-            self.result_ready.emit(row_data)
+                if dut_output:
+                    rt.save_manager.save_result(temp_value, dut_output)
+                row_data[temp_value] = dut_output
+
+            if row_data:
+                self.result_ready.emit(row_data)
+        finally:
+            rt.save_manager.close_file()
 
     def _read_output(self) -> dict:
         rt = self._run_test
@@ -192,6 +215,8 @@ class TestWorker(QObject):
         result: dict = {}
         output_num = 1
 
+        rt.ni.reset_nidigital(ni_resource)
+        time.sleep(0.1)
         rt.dmm.init_device()
         self.log_message.emit("DMM initialized successfully.")
         time.sleep(1)
@@ -229,7 +254,7 @@ class TestWorker(QObject):
             rt.ni.force_voltage(
                 ni_resource, backplane_channel, ni_voltage, ni_current_level
             )
-            time.sleep(1)
+            time.sleep(2)
 
             try:
                 for x in din_outputs:
@@ -246,27 +271,49 @@ class TestWorker(QObject):
 
                     self.log_message.emit(f"Measuring DIN_OUT{x}")
 
+                    if x == 5:
+                        rt.ni.force_voltage(
+                            ni_resource,
+                            rt.switch_board_to_backplane.switch(1),
+                            0.0,
+                            ni_current_level
+                            )
+
+                        time.sleep(2)
+
                     rt.ni.force_voltage(
                         ni_resource, channel, for_voltage, ni_current_level
                     )
-                    time.sleep(1)
+                    if x == 5:
+                        # self.log_message.emit("Measuring DIN5, Add delay 10 s")
+                        time.sleep(2)
+                    else:
+                        time.sleep(2)
 
                     try:
                         output_data = []
                         for _ in range(meas_count):
                             if self._abort_requested:
                                 break
-                            time.sleep(0.5)
+                            time.sleep(0.1)
                             reading = rt.dmm.read_output()
+                            time.sleep(0.1)
                             value = float(reading) if reading else None
                             output_data.append(value)
                     finally:
-                        rt.ni.disconnect_channel(ni_resource, channel)
+                        # rt.ni.disconnect_channel(ni_resource, channel)
+                        rt.ni.force_voltage(
+                            ni_resource,
+                            channel,
+                            0.0,
+                            ni_current_level
+                        )
 
                     result[output_num] = output_data
                     output_num += 1
             finally:
-                rt.ni.disconnect_channel(ni_resource, backplane_channel)
+                # rt.ni.disconnect_channel(ni_resource, backplane_channel)
+                rt.ni.reset_nidigital(ni_resource)
 
         return result
 

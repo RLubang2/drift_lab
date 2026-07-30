@@ -90,6 +90,36 @@ class SwitchBackplaneToDmm:
     def case_6(self) -> str:
         return _channels_to_string(_BACKPLANE_TO_DMM_MAP[6])
 
+    def case_7(self) -> str:
+        return _channels_to_string(_BACKPLANE_TO_DMM_MAP[7])
+
+    def case_8(self) -> str:
+        return _channels_to_string(_BACKPLANE_TO_DMM_MAP[8])
+
+    def case_9(self) -> str:
+        return _channels_to_string(_BACKPLANE_TO_DMM_MAP[9])
+
+    def case_10(self) -> str:
+        return _channels_to_string(_BACKPLANE_TO_DMM_MAP[10])
+
+    def case_11(self) -> str:
+        return _channels_to_string(_BACKPLANE_TO_DMM_MAP[11])
+
+    def case_12(self) -> str:
+        return _channels_to_string(_BACKPLANE_TO_DMM_MAP[12])
+
+    def case_13(self) -> str:
+        return _channels_to_string(_BACKPLANE_TO_DMM_MAP[13])
+
+    def case_14(self) -> str:
+        return _channels_to_string(_BACKPLANE_TO_DMM_MAP[14])
+
+    def case_15(self) -> str:
+        return _channels_to_string(_BACKPLANE_TO_DMM_MAP[15])
+
+    def case_16(self) -> str:
+        return _channels_to_string(_BACKPLANE_TO_DMM_MAP[0])    
+
     def reset(self) -> str:
         return _channels_to_string((MUX11, MUX12, MUX13, MUX14))
 
