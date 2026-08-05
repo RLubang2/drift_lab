@@ -127,6 +127,7 @@ class TestWorker(QObject):
         except Exception as e:
             self.error.emit(f"Failed to connect to temperature chamber: {e}")
             rt.save_manager.close_file()
+            rt.temp_chamber.temp_close()
             return
 
         row_data: dict = {}
@@ -150,10 +151,17 @@ class TestWorker(QObject):
 
             if row_data:
                 self.result_ready.emit(row_data)
-        finally:
+
+        except Exception as e:
+            self.error.emit(f"Error during sweep temperature test: {e}")
+            rt.temp_chamber.temp_close()
             rt.save_manager.close_file()
 
-    def _run_custom(self) -> None:
+        finally:
+            rt.save_manager.close_file()
+            rt.temp_chamber.temp_close()
+
+    def _run_custom1(self) -> None:
         if not self._validate_instrument_resources():
             return
         if not self._validate_temp_chamber():
@@ -171,22 +179,30 @@ class TestWorker(QObject):
         rt.ui_config.file_name.setText(actual_path)
 
         try:
+            self.log_message.emit("Connecting to temperature chamber...")
             rt.temp_chamber.connect_dev()
         except Exception as e:
             self.error.emit(f"Failed to connect to temperature chamber: {e}")
+            rt.temp_chamber.temp_close()
             rt.save_manager.close_file()
             return
 
         row_data: dict = {}
-
+        test_point = 1
         try:
             for row in range(row_count):
+                self.log_message.emit(f"Currently at Set Point No.: {test_point}")
+                test_point += 1
+
                 if self._abort_requested:
                     return
-                temp_value = float(rt.ui_config.temp_model.index(row, 0).data())
+                temp_value = int(rt.ui_config.temp_model.index(row, 0).data())
                 self.log_message.emit(f"Testing in temperature: {temp_value}")
                 rt.temp_chamber.temp_write(temp_value)
+                self.log_message.emit(f"Soaking at temperature: {temp_value}")
                 rt.temp_chamber.temp_soak(temp_value)
+
+                self.log_message.emit(f"Done soaking at temperature: {temp_value}")
 
                 dut_output = self._read_output()
                 if self._abort_requested:
@@ -197,9 +213,88 @@ class TestWorker(QObject):
                 row_data[temp_value] = dut_output
 
             if row_data:
+                print(row_data)
                 self.result_ready.emit(row_data)
-        finally:
+
+        except Exception as e:
+            self.error.emit(f"Error during custom temperature test: {e}")
+            rt.temp_chamber.temp_close()
             rt.save_manager.close_file()
+        finally:
+            rt.temp_chamber.temp_write(25)
+            rt.temp_chamber.temp_close()
+            rt.save_manager.close_file()
+
+    def _run_custom(self) -> None:
+        # if not self._validate_instrument_resources():
+        #     return
+        # if not self._validate_temp_chamber():
+        #     return
+
+        # rt = self._run_test
+        # row_count = rt.ui_config.temp_model.rowCount()
+
+        # if row_count < 1:
+        #     self.error.emit("Please set temperature point")
+        #     return
+
+        # filepath = rt.ui_config.file_name.text().strip()
+        # actual_path = rt.save_manager.open_file(filepath)
+        # rt.ui_config.file_name.setText(actual_path)
+
+        # try:
+        #     self.log_message.emit("Connecting to temperature chamber...")
+        #     rt.temp_chamber.connect_dev()
+        # except Exception as e:
+        #     self.error.emit(f"Failed to connect to temperature chamber: {e}")
+        #     rt.temp_chamber.temp_close()
+        #     rt.save_manager.close_file()
+        #     return
+        # row_count = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+        row_count = [10, 10, 10, 10, 10, 10, 10, 10, 10, 11]
+        row_data: dict = {}
+        test_point = 1
+        try:
+            for row in range(len(row_count)):
+                # self.log_message.emit(f"Currently at Set Point No.: {test_point}")
+                # test_point += 1
+
+                # if self._abort_requested:
+                #     return
+                # temp_value = int(rt.ui_config.temp_model.index(row, 0).data())
+                # self.log_message.emit(f"Testing in temperature: {temp_value}")
+                # rt.temp_chamber.temp_write(temp_value)
+                # self.log_message.emit(f"Soaking at temperature: {temp_value}")
+                # rt.temp_chamber.temp_soak(temp_value)
+                temp_value = row_count[row]
+                # self.log_message.emit(f"Done soaking at temperature: {temp_value}")
+
+                dut_output = {1: [1.0, 2.0, 3.0], 
+                              2: [4.0, 5.0, 6.0], 
+                              3: [7.0, 8.0, 9.0], 
+                              4: [10.0, 11.0, 12.0], 
+                              5: [13.0, 14.0, 15.0]}  # self._read_output()
+
+                # if self._abort_requested:
+                #     return
+    
+                # if dut_output:
+                #     rt.save_manager.save_result(temp_value, dut_output)
+                row_data[dut_output] = temp_value
+                print(row_data)
+
+            if row_data:
+                print(row_data)
+                self.result_ready.emit(row_data)
+
+        except Exception as e:
+            self.error.emit(f"Error during custom temperature test: {e}")
+        #     rt.temp_chamber.temp_close()
+        #     rt.save_manager.close_file()
+        # finally:
+        #     rt.temp_chamber.temp_write(25)
+        #     rt.temp_chamber.temp_close()
+        #     rt.save_manager.close_file()
 
     def _read_output(self) -> dict:
         rt = self._run_test

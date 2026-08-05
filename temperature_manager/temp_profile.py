@@ -6,13 +6,14 @@ if TYPE_CHECKING:
     from ui_manager.user_interface_config import UserInterfaceConfig
 
 from PyQt6.QtGui import QStandardItem
+from functools import partial
 
 
 class CustomTempProfile:
     def __init__(self, ui_config: UserInterfaceConfig) -> None:
         self.ui_config = ui_config
-        self.ui_config.add_row_button.clicked.connect(self._add_row)
-        self.ui_config.rem_row_button.clicked.connect(self._remove_row)
+        self.ui_config.add_row_button.clicked.connect(partial(self._add_row))
+        self.ui_config.rem_row_button.clicked.connect(partial(self._remove_row))
 
     def _add_row(self) -> None:
         self.ui_config.temp_model.appendRow([QStandardItem("20")])

@@ -73,12 +73,15 @@ class TempSerialControl(TempBase):
             return None
 
     def temp_write_setpoint(self, temp_target) -> None:
+        dev_address = self.ui_config.serial_address.value()
+        temp_target = int(temp_target)
         if self.watlow is None:
             return
         try:
             self.watlow.write_register(
-                address = 3,
-                value = temp_target
+                address = 300,
+                value = temp_target,
+                device_id = dev_address
                 )
         except ModbusException as e:
             QMessageBox.critical(None, "Unable to set temperature", f"Error: {e}")

@@ -17,3 +17,5 @@ class TempConnect:
             self.ui_config.temp_response.setText(id)
         else:
             return
+
+        self.temp_run.temp_close()
