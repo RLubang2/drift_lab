@@ -20,11 +20,7 @@ class TableViewV2:
         self.model.clear()
 
         max_readings = max(
-            (
-                len(record["readings"])
-                for records in results.values()
-                for record in records
-            ),
+            (len(readings) for sites in results.values() for readings in sites.values()),
             default=0,
         )
 
@@ -33,25 +29,15 @@ class TableViewV2:
             "Unit",
             *[f"Read {i}" for i in range(1, max_readings + 1)],
         ]
-
         self.model.setHorizontalHeaderLabels(headers)
 
-        for site, records in results.items():
-
-            for record in records:
-
-                temp = record["temp"]
-                readings = record["readings"]
-
+        for temp, sites in results.items():
+            for site, readings in sites.items():
                 row_items = [
                     QStandardItem(str(temp)),
                     QStandardItem(str(site)),
                 ]
-
-                row_items.extend(
-                    QStandardItem(str(value))
-                    for value in readings
-                )
+                row_items.extend(QStandardItem(str(v)) for v in readings)
 
                 for item in row_items:
                     item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)

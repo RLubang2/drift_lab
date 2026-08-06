@@ -89,6 +89,8 @@ class TestWorker(QObject):
     def _run_ambient(self) -> None:
         if not self._validate_instrument_resources():
             return
+        
+        row_data = {}
 
         self.log_message.emit("Starting ambient test...")
         rt = self._run_test
@@ -96,15 +98,32 @@ class TestWorker(QObject):
         filepath = rt.ui_config.file_name.text().strip()
         actual_path = rt.save_manager.open_file(filepath)
         rt.ui_config.file_name.setText(actual_path)
+        try:
+            dut_output = self._read_output()
 
-        dut_output = self._read_output()
-        if self._abort_requested:
-            return
+            if self._abort_requested:
+                rt.save_manager.save_result("AMB", dut_output)
+                return
 
-        row_data = {"AMB": dut_output}
-        self.result_ready.emit(row_data)
-        rt.save_manager.save_result("AMB", dut_output)
-        rt.save_manager.close_file()
+            if dut_output:
+                rt.save_manager.save_result("AMB", dut_output)
+                for site, readings in dut_output.items():
+                    row_data.setdefault(site, [])
+                    row_data[site].append(
+                        {
+                            "temp": "AMB",
+                            "readings": readings
+                        }
+                    )
+            if row_data:
+                self.result_ready.emit(row_data)
+
+        except Exception as e:
+            self.error.emit(f"Error during ambient test: {e}")
+            rt.save_manager.close_file()
+
+        finally:
+            rt.save_manager.close_file()
 
     def _run_sweep(self) -> None:
         if not self._validate_instrument_resources():
@@ -161,7 +180,7 @@ class TestWorker(QObject):
             rt.save_manager.close_file()
             rt.temp_chamber.temp_close()
 
-    def _run_custom1(self) -> None:
+    def _run_custom(self) -> None:
         if not self._validate_instrument_resources():
             return
         if not self._validate_temp_chamber():
@@ -205,12 +224,22 @@ class TestWorker(QObject):
                 self.log_message.emit(f"Done soaking at temperature: {temp_value}")
 
                 dut_output = self._read_output()
+
                 if self._abort_requested:
+                    rt.save_manager.save_result(temp_value, dut_output)
                     return
 
                 if dut_output:
                     rt.save_manager.save_result(temp_value, dut_output)
-                row_data[temp_value] = dut_output
+                # row_data[temp_value] = dut_output
+                for site, readings in dut_output.items():
+                    row_data.setdefault(site, [])
+                    row_data[site].append(
+                        {
+                            "temp": temp_value,
+                            "readings": readings
+                        }
+                    )
 
             if row_data:
                 print(row_data)
@@ -225,66 +254,43 @@ class TestWorker(QObject):
             rt.temp_chamber.temp_close()
             rt.save_manager.close_file()
 
-    def _run_custom(self) -> None:
-        # if not self._validate_instrument_resources():
-        #     return
-        # if not self._validate_temp_chamber():
-        #     return
+    def _run_custom1(self) -> None:
 
-        # rt = self._run_test
-        # row_count = rt.ui_config.temp_model.rowCount()
-
-        # if row_count < 1:
-        #     self.error.emit("Please set temperature point")
-        #     return
-
-        # filepath = rt.ui_config.file_name.text().strip()
-        # actual_path = rt.save_manager.open_file(filepath)
-        # rt.ui_config.file_name.setText(actual_path)
-
-        # try:
-        #     self.log_message.emit("Connecting to temperature chamber...")
-        #     rt.temp_chamber.connect_dev()
-        # except Exception as e:
-        #     self.error.emit(f"Failed to connect to temperature chamber: {e}")
-        #     rt.temp_chamber.temp_close()
-        #     rt.save_manager.close_file()
-        #     return
-        # row_count = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-        row_count = [10, 10, 10, 10, 10, 10, 10, 10, 10, 11]
+        row_count = [10, 20, 30]
         row_data: dict = {}
-        test_point = 1
+
         try:
             for row in range(len(row_count)):
-                # self.log_message.emit(f"Currently at Set Point No.: {test_point}")
-                # test_point += 1
 
-                # if self._abort_requested:
-                #     return
-                # temp_value = int(rt.ui_config.temp_model.index(row, 0).data())
-                # self.log_message.emit(f"Testing in temperature: {temp_value}")
-                # rt.temp_chamber.temp_write(temp_value)
-                # self.log_message.emit(f"Soaking at temperature: {temp_value}")
-                # rt.temp_chamber.temp_soak(temp_value)
                 temp_value = row_count[row]
-                # self.log_message.emit(f"Done soaking at temperature: {temp_value}")
+
 
                 dut_output = {1: [1.0, 2.0, 3.0], 
                               2: [4.0, 5.0, 6.0], 
                               3: [7.0, 8.0, 9.0], 
                               4: [10.0, 11.0, 12.0], 
-                              5: [13.0, 14.0, 15.0]}  # self._read_output()
+                              6: [13.0, 14.0, 15.0]} 
 
-                # if self._abort_requested:
-                #     return
-    
-                # if dut_output:
-                #     rt.save_manager.save_result(temp_value, dut_output)
-                row_data[dut_output] = temp_value
-                print(row_data)
+                for site, readings in dut_output.items():
+                    # print(site)
+                    # print(readings)
+                    row_data.setdefault(site, [])
+                    row_data[site].append(
+                        {
+                            "temp": temp_value,
+                            "readings": readings
+                        }
+                    )
+                    # row_data[site].setdefault(temp_value, [])
+                    # row_data[site][temp_value].append(readings)
+
 
             if row_data:
                 print(row_data)
+
+                # for site in row_data:
+                #     for temp in site.values():
+                #         print(temp.values())
                 self.result_ready.emit(row_data)
 
         except Exception as e:
@@ -375,10 +381,10 @@ class TestWorker(QObject):
                     #         )
 
                     #     time.sleep(2)
-                    for _ in range(2):
-                        rt.ni.force_voltage(
-                            ni_resource, channel, for_voltage, ni_current_level
-                        )
+                    # for _ in range(2):
+                    rt.ni.force_voltage(
+                        ni_resource, channel, for_voltage, ni_current_level
+                    )
                     # if x == 5:
                     #     # self.log_message.emit("Measuring DIN5, Add delay 10 s")
                     #     time.sleep(2)
@@ -408,6 +414,7 @@ class TestWorker(QObject):
                         )
                         
                         time.sleep(1)
+                    site_num = x
                     result[output_num] = output_data
                     output_num += 1
             finally:
