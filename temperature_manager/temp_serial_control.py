@@ -75,6 +75,10 @@ class TempSerialControl(TempBase):
     def temp_write_setpoint(self, temp_target) -> None:
         dev_address = self.ui_config.serial_address.value()
         temp_target = int(temp_target)
+
+        if temp_target < 0:
+            temp_target = temp_target & 0xFFFF
+
         if self.watlow is None:
             return
         try:
@@ -110,8 +114,9 @@ class TempSerialControl(TempBase):
 
             if current_temp is None:
                 return
-            
-            if abs(current_temp - temp_target) <= 1:
+            coverted_temp = current_temp - 65536 if current_temp > 32767 else current_temp
+
+            if abs(abs(coverted_temp) - abs(temp_target)) <= 1:
                 break
 
             time.sleep(5)

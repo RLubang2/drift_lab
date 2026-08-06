@@ -151,8 +151,10 @@ class TestWorker(QObject):
 
         row_data: dict = {}
 
+        step = -abs(temp_inc) if temp_start > temp_end else abs(temp_inc)
+
         try:
-            for temp in range(temp_start, temp_end, temp_inc):
+            for temp in range(temp_start, temp_end, step):
                 if self._abort_requested:
                     return
                 temp_val = temp / 10
@@ -163,7 +165,7 @@ class TestWorker(QObject):
                 self.log_message.emit(f"Done soaking at temperature: {temp_val}")
 
                 dut_output = self._read_output()
-                
+
                 if self._abort_requested:
                     rt.save_manager.save_result(temp_val, dut_output)
                     return
@@ -270,7 +272,27 @@ class TestWorker(QObject):
             rt.temp_chamber.temp_close()
             rt.save_manager.close_file()
         finally:
-            rt.temp_chamber.temp_write(25)
+            last_temp = int(rt.ui_config.temp_model.index(row_count - 1, 0).data())
+            if last_temp < 15:
+                rt.temp_chamber.temp_write(100)
+                QMessageBox.warning(None, 
+                                     "Test Complete", 
+                                     "Warming up to remove moisture. Please wait for 5 minutes before starting the next test."
+                                     )
+                
+                while True:
+                    temp_env = rt.temp_chamber.temp_read()
+                    time.sleep(5)
+                    if temp_env is None:
+                        break
+                    if temp_env > 85:
+                        break
+
+                time.sleep(180)
+                rt.temp_chamber.temp_write(25)
+            else:
+                rt.temp_chamber.temp_write(25)
+
             rt.temp_chamber.temp_close()
             rt.save_manager.close_file()
 
@@ -511,6 +533,19 @@ class RunTest:
             self._worker.request_abort()
         self.reset_all_equipment()
 
+        if self._thread is not None:
+            self._thread.quit()
+            self._thread.wait()
+
+        self._thread = None
+        self._worker = None
+
+        self.ui_config.test_run_button.setEnabled(True)
+        QMessageBox.critical(None, 
+                             "Test Aborted", 
+                             "The test has been aborted. All equipment has been reset."
+                             )
+
     def _on_test_finished(self) -> None:
         self.ui_config.test_run_button.setEnabled(True)
         if self._thread is not None:
@@ -519,6 +554,7 @@ class RunTest:
         self._thread = None
         self._worker = None
         self.console_window.log("Test finished.")
+        # QMessageBox.information(None, "Test Result", "The test has finished.")
 
     def _on_test_error(self, message: str) -> None:
         self.console_window.log(f"ERROR: {message}")
@@ -529,6 +565,10 @@ class RunTest:
         if self.ui_config.temp_test_mode.currentIndex() == 0:
             QMessageBox.information(
                 None, "Ambient Test", "Ambient test completed successfully."
+            )
+        else:
+            QMessageBox.information(
+                None, "Temperature Test", "Temperature test completed successfully."
             )
 
     def reset_all_equipment(self) -> None:
