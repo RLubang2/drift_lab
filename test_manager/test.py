@@ -158,15 +158,28 @@ class TestWorker(QObject):
                 temp_val = temp / 10
                 self.log_message.emit(f"Testing in temperature: {temp_val}")
                 rt.temp_chamber.temp_write(temp_val)
+                self.log_message.emit(f"Soaking at temperature: {temp_val}")
                 rt.temp_chamber.temp_soak(temp_val)
+                self.log_message.emit(f"Done soaking at temperature: {temp_val}")
 
                 dut_output = self._read_output()
+                
                 if self._abort_requested:
+                    rt.save_manager.save_result(temp_val, dut_output)
                     return
 
                 if dut_output:
                     rt.save_manager.save_result(temp_val, dut_output)
-                row_data[temp_val] = dut_output
+                # row_data[temp_val] = dut_output
+
+                for site, readings in dut_output.items():
+                    row_data.setdefault(site, [])
+                    row_data[site].append(
+                        {
+                            "temp": temp_val,
+                            "readings": readings
+                        }
+                    )
 
             if row_data:
                 self.result_ready.emit(row_data)
@@ -177,6 +190,13 @@ class TestWorker(QObject):
             rt.save_manager.close_file()
 
         finally:
+            if temp_end < 0:
+                rt.temp_chamber.temp_write(100)
+                time.sleep(300)
+                rt.temp_chamber.temp_write(25)
+            else:
+                rt.temp_chamber.temp_write(25)
+
             rt.save_manager.close_file()
             rt.temp_chamber.temp_close()
 
@@ -242,7 +262,7 @@ class TestWorker(QObject):
                     )
 
             if row_data:
-                print(row_data)
+                # print(row_data)
                 self.result_ready.emit(row_data)
 
         except Exception as e:
