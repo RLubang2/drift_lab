@@ -56,8 +56,11 @@ class TempGPIBControl(TempBase):
             QMessageBox.critical(None, "Unable to read setpoint", f"Error: {e}")
             return None
 
-    def temp_soak_time(self, soak_time: int, temp_target: float) -> None:
+    def temp_soak_time(self, soak_time: int, temp_target: float, abort_check=None) -> None:
         while True:
+            if abort_check is not None and abort_check():
+                return
+
             current_temp = self.temp_read_setpoint()
             if current_temp is None:
                 return
@@ -67,6 +70,9 @@ class TempGPIBControl(TempBase):
             
             time.sleep(1)  # Wait for 1 second before checking again
             
+        if abort_check is not None and abort_check():
+            return
+
         time.sleep(soak_time)
 
     def close_dev(self) -> None:

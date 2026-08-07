@@ -108,8 +108,11 @@ class TempSerialControl(TempBase):
             QMessageBox.critical(None, "Unable to read", f"Error: {e}")
             return None
 
-    def temp_soak_time(self, soak_time: int, temp_target: float) -> None:
+    def temp_soak_time(self, soak_time: int, temp_target: float, abort_check=None) -> None:
         while True:
+            if abort_check is not None and abort_check():
+                return
+
             current_temp = self.temp_read_setpoint()
 
             if current_temp is None:
@@ -121,6 +124,9 @@ class TempSerialControl(TempBase):
 
             time.sleep(5)
             
+        if abort_check is not None and abort_check():
+            return
+
         time.sleep(soak_time)
 
     def close_dev(self):

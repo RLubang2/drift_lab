@@ -125,6 +125,28 @@ class TestWorker(QObject):
         finally:
             rt.save_manager.close_file()
 
+    def _generate_set_points(self, start, end, step):
+        if step == 0:
+            raise ValueError("Step value cannot be zero.")
+
+        set_points = []
+
+        if start < end:
+            temp = start
+            while temp + step < end:
+                temp += step
+                set_points.append(temp)
+        elif start > end:
+            temp = start
+            while temp - step > end:
+                temp -= step
+                set_points.append(temp)
+
+        if set_points[-1] != end:
+            set_points.append(end)
+
+        return set_points
+
     def _run_sweep(self) -> None:
         if not self._validate_instrument_resources():
             return
@@ -137,9 +159,13 @@ class TestWorker(QObject):
         actual_path = rt.save_manager.open_file(filepath)
         rt.ui_config.file_name.setText(actual_path)
 
-        temp_start = int(rt.ui_config.temp_start_ramp.value() * 10)
-        temp_end = int(rt.ui_config.temp_end_ramp.value() * 10)
-        temp_inc = int(rt.ui_config.temp_inc_ramp.value() * 10)
+        temp_start = int(rt.ui_config.temp_start_ramp.value())
+        temp_end = int(rt.ui_config.temp_end_ramp.value())
+        temp_inc = int(rt.ui_config.temp_inc_ramp.value())
+
+        row_data: dict = {}
+
+        set_points = self._generate_set_points(temp_start, temp_end, temp_inc)
 
         try:
             rt.temp_chamber.connect_dev()
@@ -149,19 +175,16 @@ class TestWorker(QObject):
             rt.temp_chamber.temp_close()
             return
 
-        row_data: dict = {}
-
-        step = -abs(temp_inc) if temp_start > temp_end else abs(temp_inc)
-
         try:
-            for temp in range(temp_start, temp_end, step):
+            for temp in set_points:
                 if self._abort_requested:
                     return
-                temp_val = temp / 10
+                
+                temp_val = temp
                 self.log_message.emit(f"Testing in temperature: {temp_val}")
                 rt.temp_chamber.temp_write(temp_val)
                 self.log_message.emit(f"Soaking at temperature: {temp_val}")
-                rt.temp_chamber.temp_soak(temp_val)
+                rt.temp_chamber.temp_soak(temp_val, abort_check=self.is_aborted)
                 self.log_message.emit(f"Done soaking at temperature: {temp_val}")
 
                 dut_output = self._read_output()
@@ -202,6 +225,83 @@ class TestWorker(QObject):
             rt.save_manager.close_file()
             rt.temp_chamber.temp_close()
 
+    # def _run_sweep(self) -> None:
+    #     if not self._validate_instrument_resources():
+    #         return
+    #     if not self._validate_temp_chamber():
+    #         return
+    #     self.log_message.emit("Starting Sweep Temperature Test...")
+    #     rt = self._run_test
+
+    #     filepath = rt.ui_config.file_name.text().strip()
+    #     actual_path = rt.save_manager.open_file(filepath)
+    #     rt.ui_config.file_name.setText(actual_path)
+
+    #     temp_start = int(rt.ui_config.temp_start_ramp.value() * 10)
+    #     temp_end = int(rt.ui_config.temp_end_ramp.value() * 10)
+    #     temp_inc = int(rt.ui_config.temp_inc_ramp.value() * 10)
+
+    #     try:
+    #         rt.temp_chamber.connect_dev()
+    #     except Exception as e:
+    #         self.error.emit(f"Failed to connect to temperature chamber: {e}")
+    #         rt.save_manager.close_file()
+    #         rt.temp_chamber.temp_close()
+    #         return
+
+    #     row_data: dict = {}
+
+    #     step = -abs(temp_inc) if temp_start > temp_end else abs(temp_inc)
+
+    #     try:
+    #         for temp in range(temp_start, temp_end, step):
+    #             if self._abort_requested:
+    #                 return
+    #             temp_val = temp / 10
+    #             self.log_message.emit(f"Testing in temperature: {temp_val}")
+    #             rt.temp_chamber.temp_write(temp_val)
+    #             self.log_message.emit(f"Soaking at temperature: {temp_val}")
+    #             rt.temp_chamber.temp_soak(temp_val)
+    #             self.log_message.emit(f"Done soaking at temperature: {temp_val}")
+
+    #             dut_output = self._read_output()
+
+    #             if self._abort_requested:
+    #                 rt.save_manager.save_result(temp_val, dut_output)
+    #                 return
+
+    #             if dut_output:
+    #                 rt.save_manager.save_result(temp_val, dut_output)
+    #             # row_data[temp_val] = dut_output
+
+    #             for site, readings in dut_output.items():
+    #                 row_data.setdefault(site, [])
+    #                 row_data[site].append(
+    #                     {
+    #                         "temp": temp_val,
+    #                         "readings": readings
+    #                     }
+    #                 )
+
+    #         if row_data:
+    #             self.result_ready.emit(row_data)
+
+    #     except Exception as e:
+    #         self.error.emit(f"Error during sweep temperature test: {e}")
+    #         rt.temp_chamber.temp_close()
+    #         rt.save_manager.close_file()
+
+    #     finally:
+    #         if temp_end < 0:
+    #             rt.temp_chamber.temp_write(100)
+    #             time.sleep(300)
+    #             rt.temp_chamber.temp_write(25)
+    #         else:
+    #             rt.temp_chamber.temp_write(25)
+
+    #         rt.save_manager.close_file()
+    #         rt.temp_chamber.temp_close()
+
     def _run_custom(self) -> None:
         if not self._validate_instrument_resources():
             return
@@ -241,7 +341,7 @@ class TestWorker(QObject):
                 self.log_message.emit(f"Testing in temperature: {temp_value}")
                 rt.temp_chamber.temp_write(temp_value)
                 self.log_message.emit(f"Soaking at temperature: {temp_value}")
-                rt.temp_chamber.temp_soak(temp_value)
+                rt.temp_chamber.temp_soak(temp_value, abort_check=self.is_aborted)
 
                 self.log_message.emit(f"Done soaking at temperature: {temp_value}")
 
@@ -273,6 +373,7 @@ class TestWorker(QObject):
             rt.save_manager.close_file()
         finally:
             last_temp = int(rt.ui_config.temp_model.index(row_count - 1, 0).data())
+
             if last_temp < 15:
                 rt.temp_chamber.temp_write(100)
                 QMessageBox.warning(None, 
@@ -523,7 +624,6 @@ class RunTest:
         self._worker.error.connect(self._on_test_error)
         self._worker.result_ready.connect(self._on_result_ready)
         self._worker.log_message.connect(self.console_window.log)
-
         self.ui_config.test_run_button.setEnabled(False)
         self._thread.start()
 

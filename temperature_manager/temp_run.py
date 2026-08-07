@@ -34,9 +34,9 @@ class RunTemp:
     def temp_read(self) -> Optional[float]:
         return self.controller.temp_read_setpoint()
 
-    def temp_soak(self, temp: float) -> None:
+    def temp_soak(self, temp: float, abort_check=None) -> None:
         soak_time = self.ui_config.temp_soak_time.value()
-        return self.controller.temp_soak_time(soak_time, temp)
+        return self.controller.temp_soak_time(soak_time, temp, abort_check=abort_check)
 
     def temp_close(self):
         return self.controller.close_dev()
