@@ -19,7 +19,7 @@ class TempBase(ABC):
         pass
 
     @abstractmethod
-    def temp_soak_time(self, soak_time: int, temp_target: float) -> None:
+    def temp_soak_time(self, soak_time: int, temp_target: float, abort_check) -> None:
         pass
 
     @abstractmethod

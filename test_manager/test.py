@@ -628,29 +628,31 @@ class RunTest:
         self._thread.start()
 
     def _abort_test(self) -> None:
-        self.console_window.log("Abort requested - resetting all equipment...")
+        self.console_window.log("Abort requested - stopping test and cleaning up...")
         if self._worker is not None:
             self._worker.request_abort()
+
         self.reset_all_equipment()
 
         if self._thread is not None:
             self._thread.quit()
-            self._thread.wait()
+            self._thread.wait(1000)
 
         self._thread = None
         self._worker = None
 
         self.ui_config.test_run_button.setEnabled(True)
-        QMessageBox.critical(None, 
-                             "Test Aborted", 
-                             "The test has been aborted. All equipment has been reset."
-                             )
+        QMessageBox.critical(
+            None,
+            "Test Aborted",
+            "The test has been aborted. All equipment has been reset."
+        )
 
     def _on_test_finished(self) -> None:
         self.ui_config.test_run_button.setEnabled(True)
         if self._thread is not None:
             self._thread.quit()
-            self._thread.wait()
+            self._thread.wait(1000)
         self._thread = None
         self._worker = None
         self.console_window.log("Test finished.")
